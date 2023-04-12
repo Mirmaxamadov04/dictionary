@@ -60,9 +60,6 @@ a {
   border: none;
   margin-left: 20px; }
 
-.moon body {
-  background-color: #050505; }
-
 .moon__image {
   margin-top: 15px; }
 
@@ -107,6 +104,13 @@ a {
   position: absolute;
   top: -12px;
   left: -45px; }
+
+.on {
+  color: #ffffff !important;
+  background: #1f1f1f; }
+
+.on::placeholder {
+  color: #ffffff; }
 
 .content__top {
   margin-top: 45px;
@@ -249,5 +253,12 @@ a {
   margin-top: 14px;
   background: transparent;
   border: none; }
+
+.on {
+  color: #ffffff !important;
+  background: #1f1f1f; }
+
+.white {
+  color: #ffffff; }
 
 /*# sourceMappingURL=main.css.map */

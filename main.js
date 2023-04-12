@@ -29,6 +29,11 @@ elForm.addEventListener("submit", (evt) => {
     .then((data) => {
       console.log(data);
 
+      elSearchedWord.textContent = "";
+      elWordRead.textContent = "";
+      elDefenitionsDiv.forEach((div) => (div.innerHTML = ""));
+      elSynonymDiv.forEach((div) => (div.innerHTML = ""));
+
       elSearchedWord.textContent = data[0]["word"];
       elWordRead.textContent = data[0].phonetic || data[0].phonetics[1]["text"];
       elWordAudioSource.setAttribute(
@@ -66,39 +71,61 @@ elForm.addEventListener("submit", (evt) => {
       elSourceParagraph.textContent = "Source";
       elSourceLink.setAttribute("href", data[0]["sourceUrls"]);
       elSourceLink.textContent = data[0]["sourceUrls"];
+
+      elInput.value = "";
     })
     .catch((error) => {
       console.log(error);
     });
 });
 
+//playSoundButton
 elAudioButton.addEventListener("click", (evt) => {
   evt.preventDefault();
 
   document.querySelector("#wordAudio").play();
 });
 
-// elNavButton.addEventListener("click", (evt) => {
-//   evt.preventDefault();
-
-//   console.log("bosildi");
-// });
-
+//switchmoodbuttons
 elOnOff.addEventListener("click", (evt) => {
   evt.preventDefault();
 
+  switchmood();
+
   if (elOnOffImage.src.includes("on")) {
     elOnOffImage.src = "./images/off.svg";
+    document.querySelector("body").style.background = "#FFF";
   } else {
     elOnOffImage.src = "./images/on.svg";
+    document.querySelector("body").style.background = "#050505";
   }
 });
 
 elMoonButton.addEventListener("click", (evt) => {
   evt.preventDefault();
+  switchmood();
+
   if (elOnOffImage.src.includes("on")) {
     elOnOffImage.src = "./images/off.svg";
+    document.querySelector("body").style.background = "#FFF";
   } else {
     elOnOffImage.src = "./images/on.svg";
+    document.querySelector("body").style.background = "#050505";
   }
 });
+
+function switchmood() {
+  elInput.classList.toggle("on");
+  elSearchedWord.classList.toggle("white");
+  elNounHeading.forEach((heading) => {
+    heading.classList.toggle("white");
+  });
+
+  elSourceLink.classList.toggle("white");
+
+  document.querySelectorAll(".noun__definition").forEach((definition) => {
+    definition.classList.toggle("white");
+  });
+
+  document.querySelector(".nav__select").classList.toggle("white");
+}

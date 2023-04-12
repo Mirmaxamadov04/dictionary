@@ -46,3 +46,12 @@
   top: -12px;
   left: -45px;
 }
+
+.on {
+  color: #ffffff !important;
+  background: #1f1f1f;
+}
+
+.on::placeholder {
+  color: #ffffff;
+}
