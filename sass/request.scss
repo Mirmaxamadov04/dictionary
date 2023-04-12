@@ -1,0 +1,48 @@
+.request {
+  margin-top: 50px;
+}
+
+.form {
+  text-align: center;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.form__button {
+  position: relative;
+  border: none;
+}
+
+.form__input:active {
+  border: 1px solid #a445ed;
+}
+
+.form__input {
+  margin: 0 auto;
+  width: 99%;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  color: #2d2d2d;
+  position: relative;
+  padding: 20px 24px;
+  background: #f4f4f4;
+  border-radius: 16px;
+  border: none;
+  outline: none;
+}
+
+.form__input::placeholder {
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  color: #2d2d2d;
+  mix-blend-mode: normal;
+  opacity: 0.25;
+}
+
+.form__button-img {
+  position: absolute;
+  top: -12px;
+  left: -45px;
+}
