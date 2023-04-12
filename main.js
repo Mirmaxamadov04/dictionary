@@ -3,6 +3,7 @@ const elForm = document.querySelector(".form");
 const elInput = document.querySelector(".form__input");
 const elSearchedWord = document.querySelector(".word__name");
 const elWordRead = document.querySelector(".word__read");
+const elAudio = document.querySelector("#wordAudio");
 const elWordAudioSource = document.querySelector(".wordAudio__src");
 const elNounHeading = document.querySelectorAll(".noun__heading");
 const elNounMeaning = document.querySelectorAll(".noun__meaning");
@@ -10,6 +11,12 @@ const elDefenitionsDiv = document.querySelectorAll(".definitions");
 const elSynonymDiv = document.querySelectorAll(".synonyms");
 const elSynonym = document.querySelectorAll(".synonyms__paragraph");
 const elSynonymValue = document.querySelectorAll(".synonyms__noun");
+const elAntonymsDiv = document.querySelectorAll(".antonyms");
+const elAntonym = document.querySelectorAll(".antonyms__paragraph");
+const elAntonymValue = document.querySelectorAll(".antonyms__noun");
+const elErrorDiv = document.querySelector(".error");
+const elErrorParagraph = document.querySelector(".error__paragraph");
+const elErrorSuggestion = document.querySelector(".error__suggestion");
 const elNouns = document.querySelectorAll(".noun");
 const elSourceParagraph = document.querySelector(".source__paragraph");
 const elSourceLink = document.querySelector(".source__link");
@@ -18,6 +25,7 @@ const elOnOff = document.querySelector(".on-off");
 const elOnOffImage = document.querySelector(".on-off__image");
 const elMoonButton = document.querySelector(".moon");
 const elMoonImage = document.querySelector(".moon__image");
+const elbody = document.querySelector("body");
 
 elForm.addEventListener("submit", (evt) => {
   evt.preventDefault();
@@ -27,16 +35,16 @@ elForm.addEventListener("submit", (evt) => {
   fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`)
     .then((response) => response.json())
     .then((data) => {
-      console.log(data);
-
-      elSearchedWord.textContent = "";
-      elWordRead.textContent = "";
-      elDefenitionsDiv.forEach((div) => (div.innerHTML = ""));
-      elSynonymDiv.forEach((div) => (div.innerHTML = ""));
+      makenull();
+      if (data["title"] == "No Definitions Found") {
+        elErrorDiv.style.display = "block";
+        elErrorParagraph.textContent = data["title"];
+        elErrorSuggestion.textContent = `${data["message"]}. ${data["resolution"]}`;
+      }
 
       elSearchedWord.textContent = data[0]["word"];
       elWordRead.textContent = data[0].phonetic || data[0].phonetics[1]["text"];
-      elWordAudioSource.setAttribute(
+      elAudio.setAttribute(
         "src",
         `${data[0].phonetics[data[0].phonetics.length - 1]["audio"]}`
       );
@@ -45,29 +53,41 @@ elForm.addEventListener("submit", (evt) => {
 
       data.forEach((obj) => {
         obj.meanings.forEach((meaning, k) => {
+          //render heading
           const heading = elNounHeading[k] || elNounHeading[0];
-
           heading.textContent = meaning.partOfSpeech;
           elNouns[k].style.display = "block";
 
           const defDiv = document.createElement("div");
-          elDefenitionsDiv[k].appendChild(defDiv);
 
+          //render definition
           meaning.definitions.forEach((definition, j) => {
             let parag = document.createElement("p");
             parag.setAttribute("class", "noun__definition");
             parag.textContent = definition["definition"];
-
             defDiv.appendChild(parag);
-
-            if (meaning["synonyms"].length > 0) {
-              elSynonym[k].textContent = "synonyms";
-              elSynonymValue[k].textContent = meaning["synonyms"];
-            }
+            elDefenitionsDiv[k].appendChild(defDiv);
           });
+
+          //render synonyms
+          if (meaning["synonyms"].length > 0) {
+            elSynonymDiv[k].style.display = "flex";
+            elSynonym[k].textContent = "synonyms";
+            elSynonymValue[k].innerHTML = meaning["synonyms"];
+            console.log(meaning["synonyms"]);
+          }
+
+          //render antonyms
+          if (meaning["antonyms"].length > 0) {
+            elAntonymsDiv[k].style.display = "flex";
+            elAntonym[k].textContent = "Antonyms";
+            elAntonymValue[k].innerHTML = meaning["antonyms"];
+            console.log(meaning["antonyms"]);
+          }
         });
       });
 
+      //render source
       elSourceParagraph.textContent = "Source";
       elSourceLink.setAttribute("href", data[0]["sourceUrls"]);
       elSourceLink.textContent = data[0]["sourceUrls"];
@@ -82,50 +102,49 @@ elForm.addEventListener("submit", (evt) => {
 //playSoundButton
 elAudioButton.addEventListener("click", (evt) => {
   evt.preventDefault();
-
-  document.querySelector("#wordAudio").play();
+  console.log("play");
+  const audio = document.querySelector("#wordAudio");
+  audio.play();
 });
 
 //switchmoodbuttons
 elOnOff.addEventListener("click", (evt) => {
   evt.preventDefault();
-
-  switchmood();
+  console.log("hi");
 
   if (elOnOffImage.src.includes("on")) {
     elOnOffImage.src = "./images/off.svg";
-    document.querySelector("body").style.background = "#FFF";
+    elbody.classList.remove("dark");
   } else {
     elOnOffImage.src = "./images/on.svg";
-    document.querySelector("body").style.background = "#050505";
+    elbody.classList.add("dark");
   }
 });
 
+//listen moon button
 elMoonButton.addEventListener("click", (evt) => {
   evt.preventDefault();
-  switchmood();
 
   if (elOnOffImage.src.includes("on")) {
     elOnOffImage.src = "./images/off.svg";
-    document.querySelector("body").style.background = "#FFF";
+    elbody.classList.remove("dark");
   } else {
     elOnOffImage.src = "./images/on.svg";
-    document.querySelector("body").style.background = "#050505";
+    elbody.classList.add("dark");
   }
 });
 
-function switchmood() {
-  elInput.classList.toggle("on");
-  elSearchedWord.classList.toggle("white");
-  elNounHeading.forEach((heading) => {
-    heading.classList.toggle("white");
-  });
-
-  elSourceLink.classList.toggle("white");
-
-  document.querySelectorAll(".noun__definition").forEach((definition) => {
-    definition.classList.toggle("white");
-  });
-
-  document.querySelector(".nav__select").classList.toggle("white");
+//function makenull all
+function makenull() {
+  elSourceParagraph.textContent = " ";
+  elSourceLink.textContent = " ";
+  elNouns.forEach((noun) => (noun.style.display = "none"));
+  elErrorDiv.style.display = "none";
+  elSearchedWord.textContent = "";
+  elWordRead.textContent = "";
+  elDefenitionsDiv.forEach((div) => (div.textContent = ""));
+  elSynonym.forEach((num) => (num.textContent = ""));
+  elSynonymValue.forEach((num) => (num.textContent = ""));
+  elNounHeading.forEach((heading) => (heading.textContent = " "));
+  elAudioButton.style.display = "none";
 }

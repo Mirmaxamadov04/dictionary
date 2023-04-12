@@ -4,6 +4,11 @@
   padding: 0;
 }
 
+body {
+  font-family: "Inter";
+  font-style: normal;
+}
+
 a {
   cursor: pointer;
 }
@@ -21,14 +26,293 @@ a {
 }
 
 .nav__button {
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 24px;
+  text-align: right;
+  color: #2d2d2d;
   background: transparent;
   border: none;
+  transition: 0.3s all ease;
+  cursor: pointer;
+}
+
+.nav {
+  margin-top: -10px;
+  display: flex;
+}
+
+.on-off {
+  margin-left: 20px;
+  cursor: pointer;
+  transition: 0.3s all ease;
+}
+
+.nav__select {
+  margin-top: 15px;
+  margin-left: -30px;
+  background: transparent;
+  border: none;
+  outline: none;
+}
+
+.nav__select::after {
+  display: block;
+  content: "";
+  height: 32px;
+  width: 1px;
+  background: #e9e9e9;
+  border: 1px solid;
+}
+
+.moon {
+  background: transparent;
+  border: none;
+  margin-left: 20px;
+}
+
+.moon__image {
+  margin-top: 15px;
+}
+
+.request {
+  margin-top: 50px;
+}
+
+.form {
+  text-align: center;
+  width: 100%;
+  margin: 0 auto;
 }
 
 .form__button {
   position: relative;
+  border: none;
+}
+
+.form__input:active {
+  border: 1px solid #a445ed;
+}
+
+.form__input {
+  margin: 0 auto;
+  width: 99%;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  color: #2d2d2d;
+  position: relative;
+  padding: 20px 24px;
+  background: #f4f4f4;
+  border-radius: 16px;
+  border: none;
+  outline: none;
+}
+
+.form__input::-moz-placeholder {
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  color: #2d2d2d;
+  mix-blend-mode: normal;
+  opacity: 0.25;
+}
+
+.form__input::placeholder {
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  color: #2d2d2d;
+  mix-blend-mode: normal;
+  opacity: 0.25;
 }
 
 .form__button-img {
   position: absolute;
+  top: -12px;
+  left: -45px;
+}
+
+.on {
+  color: #ffffff !important;
+  background: #1f1f1f;
+}
+
+.on::-moz-placeholder {
+  color: #ffffff;
+}
+
+.on::placeholder {
+  color: #ffffff;
+}
+
+.content__top {
+  margin-top: 45px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.word__name {
+  font-weight: 700;
+  font-size: 64px;
+  line-height: 77px;
+  color: #2d2d2d;
+}
+
+.word__read {
+  padding-top: 8px;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 29px;
+  color: #a445ed;
+  display: block !important;
+}
+
+.audio-button {
+  width: 75px;
+  height: 75px;
+  padding: 20px;
+  padding-left: 25px;
+  margin-top: 20px;
+  border-radius: 50px;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  display: none;
+  transition: 0.3s all ease;
+  background: #a445ed;
+  mix-blend-mode: normal;
+  opacity: 0.25;
+  cursor: pointer;
+}
+
+.audio-button:hover {
+  background: #a445ed;
+  opacity: 1;
+}
+
+.audio-button__image path {
+  fill: #a445ed;
+}
+
+.noun {
+  display: none;
+  position: relative;
+  margin-top: 40px;
+}
+
+.noun__heading,
+.verb__heading {
+  margin-bottom: 40px;
+  font-style: italic;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 29px;
+  color: #2d2d2d;
+}
+
+.noun__heading:after {
+  position: absolute;
+  top: 15px;
+  left: 160px;
+  content: "";
+  display: block;
+  width: 70%;
+  border: 1px solid #e9e9e9;
+}
+
+.noun__meaning,
+.verb__meaning {
+  padding-bottom: 25px;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
+  color: #757575;
+}
+
+.noun__definition,
+.verb__definition {
+  padding-bottom: 15px;
+  padding-left: 35px;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 24px;
+  color: #2d2d2d;
+}
+
+.synonyms {
+  display: flex;
+  padding-top: 65px;
+  width: 430px;
+  width: 100%;
+  white-space: wrap;
+  overflow-x: hidden;
+}
+
+.synonyms__noun {
+  padding-left: 22px;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  color: #a445ed;
+}
+
+.verb {
+  position: relative;
+}
+
+.verb__example {
+  padding-left: 35px;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 24px;
+  color: #757575;
+}
+
+.line {
+  margin-top: 40px;
+  margin-bottom: 30px;
+  width: 100%;
+  height: 1px;
+  display: block;
+  content: "";
+  background: #e9e9e9;
+}
+
+.source {
+  display: flex;
+  padding-bottom: 100px;
+}
+
+.source__paragraph {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  text-decoration-line: underline;
+  color: #757575;
+}
+
+.source__link {
+  padding-left: 20px;
+  text-decoration: none;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  text-decoration-line: underline;
+  color: #2d2d2d;
+}
+
+.on-off {
+  margin-top: 14px;
+  background: transparent;
+  border: none;
+}
+
+.on {
+  color: #ffffff !important;
+  background: #1f1f1f;
+}
+
+.white {
+  color: #ffffff;
 }/*# sourceMappingURL=main.css.map */

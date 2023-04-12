@@ -5,6 +5,51 @@
 }
 
 .nav__button {
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 24px;
+  text-align: right;
+  color: #2d2d2d;
   background: transparent;
   border: none;
+  transition: 0.3s all ease;
+  cursor: pointer;
+}
+
+.nav {
+  margin-top: -10px;
+  display: flex;
+}
+
+.on-off {
+  margin-left: 20px;
+  cursor: pointer;
+  transition: 0.3s all ease;
+}
+
+.nav__select {
+  margin-top: 15px;
+  margin-left: -30px;
+  background: transparent;
+  border: none;
+  outline: none;
+}
+
+.nav__select::after {
+  display: block;
+  content: "";
+  height: 32px;
+  width: 1px;
+  background: #e9e9e9;
+  border: 1px solid;
+}
+
+.moon {
+  background: transparent;
+  border: none;
+  margin-left: 20px;
+}
+
+.moon__image {
+  margin-top: 15px;
 }/*# sourceMappingURL=header.css.map */

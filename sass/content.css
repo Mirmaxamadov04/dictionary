@@ -97,10 +97,6 @@
   display: flex;
   padding-top: 25px;
   display: none;
-  //   width: 430px;
-  //   width: 100%;
-  //   white-space: wrap;
-  //   overflow-x: hidden;
 }
 
 .synonyms__noun,
@@ -123,16 +119,6 @@
   line-height: 24px;
   color: #757575;
 }
-
-// .list {
-//   display: flex;
-//   list-style-type: none;
-//   width: 730px;
-// }
-
-// .list > li {
-//   padding-left: 5px;
-// }
 
 .line {
   margin-top: 40px;
@@ -216,28 +202,27 @@
 
 .dark {
   background-color: #050505;
-  .form__input {
-    color: #ffffff !important;
-    background: #1f1f1f;
-  }
-
-  .form__input::placeholder {
-    color: #ffffff;
-  }
-
-  .noun__heading:after {
-    border-color: #3a3a3a;
-  }
-
-  .line {
-    background: #3a3a3a;
-  }
-
-  .word__name,
-  .noun__heading,
-  .source__link,
-  .noun__definition,
-  .nav__select {
-    color: #ffffff;
-  }
 }
+.dark .form__input {
+  color: #ffffff !important;
+  background: #1f1f1f;
+}
+.dark .form__input::-moz-placeholder {
+  color: #ffffff;
+}
+.dark .form__input::placeholder {
+  color: #ffffff;
+}
+.dark .noun__heading:after {
+  border-color: #3a3a3a;
+}
+.dark .line {
+  background: #3a3a3a;
+}
+.dark .word__name,
+.dark .noun__heading,
+.dark .source__link,
+.dark .noun__definition,
+.dark .nav__select {
+  color: #ffffff;
+}/*# sourceMappingURL=content.css.map */
