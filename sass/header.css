@@ -4,6 +4,10 @@
   padding-top: 20px;
 }
 
+.header__logo {
+  cursor: pointer;
+}
+
 .nav__button {
   font-weight: 700;
   font-size: 18px;

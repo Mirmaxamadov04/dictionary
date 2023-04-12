@@ -26,72 +26,34 @@ const elOnOffImage = document.querySelector(".on-off__image");
 const elMoonButton = document.querySelector(".moon");
 const elMoonImage = document.querySelector(".moon__image");
 const elbody = document.querySelector("body");
+const elLoader = document.querySelector(".center-body");
 
 elForm.addEventListener("submit", (evt) => {
   evt.preventDefault();
 
   let word = elInput.value;
 
+  elLoader.style.display = "block";
+  if (word.trim() === "") {
+    document.querySelector(".form__validation").textContent =
+      "Whoops, can’t be empty…";
+    elInput.classList.add("border");
+    elLoader.style.display = "none";
+    return false;
+  }
+
   fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`)
     .then((response) => response.json())
     .then((data) => {
+      console.log(data);
+      const dataString = JSON.stringify(data);
+      localStorage.setItem("myData", dataString);
+      data = JSON.parse(localStorage.getItem("myData")) || data;
+
+      elLoader.style.display = "none";
       makenull();
-      if (data["title"] == "No Definitions Found") {
-        elErrorDiv.style.display = "block";
-        elErrorParagraph.textContent = data["title"];
-        elErrorSuggestion.textContent = `${data["message"]}. ${data["resolution"]}`;
-      }
-
-      elSearchedWord.textContent = data[0]["word"];
-      elWordRead.textContent = data[0].phonetic || data[0].phonetics[1]["text"];
-      elAudio.setAttribute(
-        "src",
-        `${data[0].phonetics[data[0].phonetics.length - 1]["audio"]}`
-      );
-
-      elAudioButton.style.display = "block";
-
-      data.forEach((obj) => {
-        obj.meanings.forEach((meaning, k) => {
-          //render heading
-          const heading = elNounHeading[k] || elNounHeading[0];
-          heading.textContent = meaning.partOfSpeech;
-          elNouns[k].style.display = "block";
-
-          const defDiv = document.createElement("div");
-
-          //render definition
-          meaning.definitions.forEach((definition, j) => {
-            let parag = document.createElement("p");
-            parag.setAttribute("class", "noun__definition");
-            parag.textContent = definition["definition"];
-            defDiv.appendChild(parag);
-            elDefenitionsDiv[k].appendChild(defDiv);
-          });
-
-          //render synonyms
-          if (meaning["synonyms"].length > 0) {
-            elSynonymDiv[k].style.display = "flex";
-            elSynonym[k].textContent = "synonyms";
-            elSynonymValue[k].innerHTML = meaning["synonyms"];
-            console.log(meaning["synonyms"]);
-          }
-
-          //render antonyms
-          if (meaning["antonyms"].length > 0) {
-            elAntonymsDiv[k].style.display = "flex";
-            elAntonym[k].textContent = "Antonyms";
-            elAntonymValue[k].innerHTML = meaning["antonyms"];
-            console.log(meaning["antonyms"]);
-          }
-        });
-      });
-
-      //render source
-      elSourceParagraph.textContent = "Source";
-      elSourceLink.setAttribute("href", data[0]["sourceUrls"]);
-      elSourceLink.textContent = data[0]["sourceUrls"];
-
+      //render synonyms
+      render(data);
       elInput.value = "";
     })
     .catch((error) => {
@@ -136,6 +98,8 @@ elMoonButton.addEventListener("click", (evt) => {
 
 //function makenull all
 function makenull() {
+  document.querySelector(".form__validation").textContent = "";
+  elInput.classList.remove("border");
   elSourceParagraph.textContent = " ";
   elSourceLink.textContent = " ";
   elNouns.forEach((noun) => (noun.style.display = "none"));
@@ -148,3 +112,79 @@ function makenull() {
   elNounHeading.forEach((heading) => (heading.textContent = " "));
   elAudioButton.style.display = "none";
 }
+
+//fontfamily
+const fontSelector = document.getElementsByClassName("nav__select")[0];
+
+fontSelector.addEventListener("change", (event) => {
+  event.preventDefault();
+  if (event.target.value === "Sans Serif") {
+    document.body.style.fontFamily = "'Inter', sans-serif";
+    console.log(document.body.style.fontFamily);
+  } else if (event.target.value === "Serif") {
+    document.body.style.fontFamily = "'Lora', serif";
+  } else {
+    document.body.style.fontFamily = "'Inconsolata', monospace";
+  }
+});
+
+function render(data) {
+  if (data["title"] == "No Definitions Found") {
+    elErrorDiv.style.display = "block";
+    elErrorParagraph.textContent = data["title"];
+    elErrorSuggestion.textContent = `${data["message"]}. ${data["resolution"]}`;
+  }
+
+  elSearchedWord.textContent = data[0]["word"];
+  elWordRead.textContent = data[0].phonetic || data[0].phonetics[1]["text"];
+  elAudio.setAttribute(
+    "src",
+    `${data[0].phonetics[data[0].phonetics.length - 1]["audio"]}`
+  );
+
+  elAudioButton.style.display = "block";
+
+  data.forEach((obj) => {
+    obj.meanings.forEach((meaning, k) => {
+      //render heading
+      const heading = elNounHeading[k] || elNounHeading[0];
+      heading.textContent = meaning.partOfSpeech;
+      elNouns[k].style.display = "block";
+
+      const defDiv = document.createElement("div");
+
+      //render definition
+      meaning.definitions.forEach((definition, j) => {
+        let parag = document.createElement("p");
+        parag.setAttribute("class", "noun__definition");
+        parag.textContent = definition["definition"];
+        defDiv.appendChild(parag);
+        elDefenitionsDiv[k].appendChild(defDiv);
+      });
+
+      //render synonyms
+      if (meaning["synonyms"].length > 0) {
+        elSynonymDiv[k].style.display = "flex";
+        elSynonym[k].textContent = "synonyms";
+        elSynonymValue[k].innerHTML = meaning["synonyms"];
+        console.log(meaning["synonyms"]);
+      }
+
+      //render antonyms
+      if (meaning["antonyms"].length > 0) {
+        elAntonymsDiv[k].style.display = "flex";
+        elAntonym[k].textContent = "Antonyms";
+        elAntonymValue[k].innerHTML = meaning["antonyms"];
+        console.log(meaning["antonyms"]);
+      }
+    });
+  });
+
+  //render source
+  elSourceParagraph.textContent = "Source";
+  elSourceLink.setAttribute("href", data[0]["sourceUrls"]);
+  elSourceLink.textContent = data[0]["sourceUrls"];
+}
+
+//onload
+window.onload(render(JSON.parse(localStorage.getItem("myData"))));

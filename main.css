@@ -15,10 +15,16 @@ a {
   padding: 0 20px;
   margin: 0 auto; }
 
+@media only screen and (max-width: 690px) {
+  .container {
+    max-width: 690px; } }
 .header .container {
   display: flex;
   justify-content: space-between;
   padding-top: 20px; }
+
+.header__logo {
+  cursor: pointer; }
 
 .nav__button {
   font-weight: 700;
@@ -67,20 +73,25 @@ a {
   margin-top: 50px; }
 
 .form {
+  position: relative;
   text-align: center;
   width: 100%;
   margin: 0 auto; }
 
 .form__button {
-  position: relative;
-  border: none; }
+  position: absolute;
+  border: none;
+  background: transparent;
+  top: 20px;
+  right: 25px; }
 
 .form__input:active {
   border: 1px solid #a445ed; }
 
 .form__input {
+  position: relative;
   margin: 0 auto;
-  width: 99%;
+  width: 100%;
   font-weight: 700;
   font-size: 20px;
   line-height: 24px;
@@ -101,9 +112,8 @@ a {
   opacity: 0.25; }
 
 .form__button-img {
-  position: absolute;
   top: -12px;
-  left: -45px; }
+  right: 10px; }
 
 .content__top {
   margin-top: 45px;
@@ -192,7 +202,11 @@ a {
 .antonyms {
   display: flex;
   padding-top: 25px;
-  display: none; }
+  display: none;
+  width: 430px;
+  width: 100%;
+  white-space: wrap;
+  overflow-x: hidden; }
 
 .synonyms__noun,
 .antonyms__noun {
@@ -215,6 +229,7 @@ a {
 .line {
   margin-top: 40px;
   margin-bottom: 30px;
+  transform: translateY(900%);
   width: 100%;
   height: 1px;
   display: block;
@@ -257,6 +272,12 @@ a {
   text-align: center;
   display: none; }
 
+.moon__image {
+  cursor: pointer; }
+
+.nav__select {
+  cursor: pointer; }
+
 .error__emotion {
   margin-bottom: 40px;
   width: 30px;
@@ -281,6 +302,16 @@ a {
   text-align: center;
   color: #757575; }
 
+.form__validation {
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
+  color: #ff5252;
+  text-align: left; }
+
+.border {
+  border: 1px solid #ff5252; }
+
 .dark {
   background-color: #050505; }
   .dark .form__input {
@@ -298,5 +329,150 @@ a {
   .dark .noun__definition,
   .dark .nav__select {
     color: #ffffff; }
+
+@media only screen and (max-width: 520px) {
+  .word__name {
+    font-size: 32px;
+    line-height: 39px; }
+
+  .word__read {
+    padding-top: 8px;
+    font-size: 18px;
+    line-height: 24px; }
+
+  .audio-button {
+    width: 48px;
+    height: 48px;
+    padding: 5px;
+    padding-left: 7px;
+    padding-top: 8px; }
+
+  .audio-button__image {
+    width: 13px;
+    height: 13px; }
+
+  .noun {
+    margin-top: 20px; }
+
+  .noun__heading,
+  .verb__heading {
+    margin-bottom: 30px;
+    font-style: italic;
+    font-size: 18px;
+    line-height: 22px; }
+
+  .noun__heading:after {
+    left: 60px; }
+
+  .noun__meaning,
+  .verb__meaning {
+    padding-bottom: 20px;
+    font-size: 16px;
+    line-height: 19px; }
+
+  .noun__definition,
+  .verb__definition {
+    padding-bottom: 15px;
+    padding-left: 35px;
+    font-size: 15px;
+    line-height: 24px; }
+
+  .synonyms,
+  .antonyms {
+    display: flex;
+    padding-top: 25px;
+    display: none;
+    width: 430px;
+    width: 100%;
+    white-space: wrap;
+    overflow-x: hidden; }
+
+  .synonyms__noun,
+  .antonyms__noun {
+    padding-left: 22px;
+    font-size: 16px;
+    line-height: 19px; }
+
+  .verb {
+    position: relative; }
+
+  .verb__example {
+    padding-left: 35px;
+    font-size: 16px;
+    line-height: 19px; }
+
+  .source {
+    display: flex;
+    flex-direction: column; }
+
+  .source__paragraph {
+    padding: 0;
+    padding-bottom: 10px;
+    font-size: 14px;
+    line-height: 17px; }
+
+  .source__link {
+    padding: 0;
+    font-size: 14px;
+    line-height: 17px; } }
+.center-body {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  position: absolute;
+  /****** center box
+	width: 300px;
+	height: 300px;
+	border: solid 1px #aaa;
+	******/ }
+
+.loader-circle-2 {
+  position: relative;
+  width: 70px;
+  height: 70px;
+  display: inline-block; }
+
+.loader-circle-2:before,
+.loader-circle-2:after {
+  content: "";
+  display: block;
+  position: absolute;
+  border-width: 5px;
+  border-style: solid;
+  border-radius: 50%; }
+
+.loader-circle-2:before {
+  width: 70px;
+  height: 70px;
+  border-bottom-color: #009688;
+  border-right-color: #009688;
+  border-top-color: transparent;
+  border-left-color: transparent;
+  animation: loader-circle-2-animation-2 1s linear infinite; }
+
+.loader-circle-2:after {
+  width: 40px;
+  height: 40px;
+  border-bottom-color: #e91e63;
+  border-right-color: #e91e63;
+  border-top-color: transparent;
+  border-left-color: transparent;
+  top: 22%;
+  left: 22%;
+  animation: loader-circle-2-animation 0.85s linear infinite; }
+
+@keyframes loader-circle-2-animation {
+  0% {
+    transform: rotate(0deg); }
+  100% {
+    transform: rotate(-360deg); } }
+@keyframes loader-circle-2-animation-2 {
+  0% {
+    transform: rotate(0deg); }
+  100% {
+    transform: rotate(360deg); } }
 
 /*# sourceMappingURL=main.css.map */

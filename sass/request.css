@@ -3,14 +3,18 @@
 }
 
 .form {
+  position: relative;
   text-align: center;
   width: 100%;
   margin: 0 auto;
 }
 
 .form__button {
-  position: relative;
+  position: absolute;
   border: none;
+  background: transparent;
+  top: 20px;
+  right: 25px;
 }
 
 .form__input:active {
@@ -18,8 +22,9 @@
 }
 
 .form__input {
+  position: relative;
   margin: 0 auto;
-  width: 99%;
+  width: 100%;
   font-weight: 700;
   font-size: 20px;
   line-height: 24px;
@@ -51,7 +56,6 @@
 }
 
 .form__button-img {
-  position: absolute;
   top: -12px;
-  left: -45px;
+  right: 10px;
 }/*# sourceMappingURL=request.css.map */
