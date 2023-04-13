@@ -54,7 +54,7 @@ elForm.addEventListener("submit", (evt) => {
       makenull();
       //render synonyms
       render(data);
-      elInput.value = "";
+      //   elInput.value = "";
     })
     .catch((error) => {
       console.log(error);
@@ -72,28 +72,13 @@ elAudioButton.addEventListener("click", (evt) => {
 //switchmoodbuttons
 elOnOff.addEventListener("click", (evt) => {
   evt.preventDefault();
-  console.log("hi");
-
-  if (elOnOffImage.src.includes("on")) {
-    elOnOffImage.src = "./images/off.svg";
-    elbody.classList.remove("dark");
-  } else {
-    elOnOffImage.src = "./images/on.svg";
-    elbody.classList.add("dark");
-  }
+  switchMood();
 });
 
 //listen moon button
 elMoonButton.addEventListener("click", (evt) => {
   evt.preventDefault();
-
-  if (elOnOffImage.src.includes("on")) {
-    elOnOffImage.src = "./images/off.svg";
-    elbody.classList.remove("dark");
-  } else {
-    elOnOffImage.src = "./images/on.svg";
-    elbody.classList.add("dark");
-  }
+  switchMood();
 });
 
 //function makenull all
@@ -120,13 +105,31 @@ fontSelector.addEventListener("change", (event) => {
   event.preventDefault();
   if (event.target.value === "Sans Serif") {
     document.body.style.fontFamily = "'Inter', sans-serif";
-    console.log(document.body.style.fontFamily);
+    localStorage.setItem("fontfamily", "'Inter', sans-serif");
   } else if (event.target.value === "Serif") {
     document.body.style.fontFamily = "'Lora', serif";
+    localStorage.setItem("fontfamily", "'Lora', serif");
   } else {
     document.body.style.fontFamily = "'Inconsolata', monospace";
+    localStorage.setItem("fontfamily", "'Inconsolata', monospace");
   }
 });
+
+//switchmood
+
+function switchMood() {
+  if (elOnOffImage.src.includes("on")) {
+    elOnOffImage.src = "./images/off.svg";
+    elbody.classList.remove("dark");
+    elMoonButton.classList.remove("moon-clicked");
+    localStorage.setItem("mode", "light");
+  } else {
+    elOnOffImage.src = "./images/on.svg";
+    elbody.classList.add("dark");
+    elMoonButton.classList.add("moon-clicked");
+    localStorage.setItem("mode", "dark");
+  }
+}
 
 function render(data) {
   if (data["title"] == "No Definitions Found") {
@@ -137,10 +140,7 @@ function render(data) {
 
   elSearchedWord.textContent = data[0]["word"];
   elWordRead.textContent = data[0].phonetic || data[0].phonetics[1]["text"];
-  elAudio.setAttribute(
-    "src",
-    `${data[0].phonetics[data[0].phonetics.length - 1]["audio"]}`
-  );
+  elAudio.src = findAudioValidSrc(data);
 
   elAudioButton.style.display = "block";
 
@@ -186,5 +186,43 @@ function render(data) {
   elSourceLink.textContent = data[0]["sourceUrls"];
 }
 
+//findAudioValidSrc
+function findAudioValidSrc(data) {
+  for (let i = 0; i < data[0].phonetics.length; i++) {
+    if (data[0].phonetics[i].audio !== "") {
+      return data[0].phonetics[i].audio;
+    }
+  }
+}
+
 //onload
-window.onload(render(JSON.parse(localStorage.getItem("myData"))));
+// window.onload(render(JSON.parse(localStorage.getItem("myData"))));
+
+window.addEventListener("load", (evt) => {
+  evt.preventDefault();
+  const dataAPi = JSON.parse(localStorage.getItem("myData"));
+  render(dataAPi);
+
+  const Mode = localStorage.getItem("mode");
+  console.log(Mode);
+
+  if (Mode === "light") {
+    elOnOffImage.src = "./images/off.svg";
+    elbody.classList.remove("dark");
+    elMoonButton.classList.remove("moon-clicked");
+  } else {
+    elOnOffImage.src = "./images/on.svg";
+    elbody.classList.add("dark");
+    elMoonButton.classList.add("moon-clicked");
+  }
+
+  const fontttFamily = localStorage.getItem("fontfamily");
+
+  if (fontttFamily === "'Inter', sans-serif") {
+    document.body.style.fontFamily = "'Inter', sans-serif";
+  } else if (fontttFamily === "'Lora', serif") {
+    document.body.style.fontFamily = "'Lora', serif";
+  } else {
+    document.body.style.fontFamily = "'Inconsolata', monospace";
+  }
+});

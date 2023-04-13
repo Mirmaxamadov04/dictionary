@@ -47,9 +47,10 @@
 }
 
 .form__button-img {
-  // position: absolute;
-  top: -12px;
-  right: 10px;
+  position: relative;
+  top: 2px;
+  right: 8px;
+  cursor: pointer;
 }
 
 // .on {

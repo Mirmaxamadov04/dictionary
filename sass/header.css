@@ -56,4 +56,8 @@
 
 .moon__image {
   margin-top: 15px;
+}
+
+.moon-clicked .moon__image path {
+  stroke: #a445ed;
 }/*# sourceMappingURL=header.css.map */

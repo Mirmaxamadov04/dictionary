@@ -69,6 +69,9 @@ a {
 .moon__image {
   margin-top: 15px; }
 
+.moon-clicked .moon__image path {
+  stroke: #a445ed; }
+
 .request {
   margin-top: 50px; }
 
@@ -112,8 +115,10 @@ a {
   opacity: 0.25; }
 
 .form__button-img {
-  top: -12px;
-  right: 10px; }
+  position: relative;
+  top: 2px;
+  right: 8px;
+  cursor: pointer; }
 
 .content__top {
   margin-top: 45px;
@@ -313,7 +318,8 @@ a {
   border: 1px solid #ff5252; }
 
 .dark {
-  background-color: #050505; }
+  background-color: #050505;
+  transition: 0.2s all ease; }
   .dark .form__input {
     color: #ffffff !important;
     background: #1f1f1f; }
