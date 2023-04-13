@@ -196,7 +196,7 @@ a {
 
 .noun__definition,
 .verb__definition {
-  padding-bottom: 15px;
+  padding-bottom: 8px;
   padding-left: 35px;
   font-weight: 400;
   font-size: 18px;
@@ -250,7 +250,9 @@ a {
   font-size: 14px;
   line-height: 17px;
   text-decoration-line: underline;
-  color: #757575; }
+  color: #757575;
+  transition: 0.3s all ease;
+  cursor: pointer; }
 
 .source__link {
   padding-left: 20px;
@@ -259,7 +261,12 @@ a {
   font-size: 14px;
   line-height: 17px;
   text-decoration-line: underline;
-  color: #2d2d2d; }
+  color: #2d2d2d;
+  transition: 0.3s all ease; }
+
+.source__paragraph:hover,
+.source__link:hover {
+  color: #8f19e8 !important; }
 
 .on-off {
   margin-top: 14px;
@@ -421,6 +428,28 @@ a {
     padding: 0;
     font-size: 14px;
     line-height: 17px; } }
+.definition__example {
+  padding-bottom: 20px;
+  padding-left: 35px;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 24px;
+  color: #757575; }
+
+.definitions > div > .spaan:before {
+  position: absolute;
+  content: "";
+  display: block;
+  width: 5px;
+  height: 5px;
+  top: 10px;
+  left: 0px;
+  border-radius: 5px;
+  background: #8f19e8; }
+
+.definitions > div > .spaan {
+  position: relative; }
+
 .center-body {
   display: none;
   justify-content: center;

@@ -27,44 +27,46 @@ const elMoonButton = document.querySelector(".moon");
 const elMoonImage = document.querySelector(".moon__image");
 const elbody = document.querySelector("body");
 const elLoader = document.querySelector(".center-body");
+const elContent = document.querySelector(".content");
 
+//Listening form
 elForm.addEventListener("submit", (evt) => {
   evt.preventDefault();
 
   let word = elInput.value;
 
+  elContent.style.display = "none";
   elLoader.style.display = "block";
+
   if (word.trim() === "") {
     document.querySelector(".form__validation").textContent =
       "Whoops, can’t be empty…";
     elInput.classList.add("border");
     elLoader.style.display = "none";
+    elContent.style.display = "block";
+    querySave(word);
     return false;
   }
 
   fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`)
     .then((response) => response.json())
     .then((data) => {
-      console.log(data);
       const dataString = JSON.stringify(data);
       localStorage.setItem("myData", dataString);
       data = JSON.parse(localStorage.getItem("myData")) || data;
 
       elLoader.style.display = "none";
+      elContent.style.display = "block";
       makenull();
-      //render synonyms
       render(data);
-      //   elInput.value = "";
+      querySave(word);
     })
-    .catch((error) => {
-      console.log(error);
-    });
+    .catch((error) => {});
 });
 
 //playSoundButton
 elAudioButton.addEventListener("click", (evt) => {
   evt.preventDefault();
-  console.log("play");
   const audio = document.querySelector("#wordAudio");
   audio.play();
 });
@@ -100,7 +102,6 @@ function makenull() {
 
 //fontfamily
 const fontSelector = document.getElementsByClassName("nav__select")[0];
-
 fontSelector.addEventListener("change", (event) => {
   event.preventDefault();
   if (event.target.value === "Sans Serif") {
@@ -116,7 +117,6 @@ fontSelector.addEventListener("change", (event) => {
 });
 
 //switchmood
-
 function switchMood() {
   if (elOnOffImage.src.includes("on")) {
     elOnOffImage.src = "./images/off.svg";
@@ -131,6 +131,7 @@ function switchMood() {
   }
 }
 
+//render searched word to the page
 function render(data) {
   if (data["title"] == "No Definitions Found") {
     elErrorDiv.style.display = "block";
@@ -141,7 +142,6 @@ function render(data) {
   elSearchedWord.textContent = data[0]["word"];
   elWordRead.textContent = data[0].phonetic || data[0].phonetics[1]["text"];
   elAudio.src = findAudioValidSrc(data);
-
   elAudioButton.style.display = "block";
 
   data.forEach((obj) => {
@@ -150,15 +150,19 @@ function render(data) {
       const heading = elNounHeading[k] || elNounHeading[0];
       heading.textContent = meaning.partOfSpeech;
       elNouns[k].style.display = "block";
-
       const defDiv = document.createElement("div");
 
       //render definition
       meaning.definitions.forEach((definition, j) => {
         let parag = document.createElement("p");
+        let example = document.createElement("p");
         parag.setAttribute("class", "noun__definition");
+        parag.classList.add("spaan");
+        example.setAttribute("class", "definition__example");
         parag.textContent = definition["definition"];
+        example.textContent = definition["example"];
         defDiv.appendChild(parag);
+        defDiv.appendChild(example);
         elDefenitionsDiv[k].appendChild(defDiv);
       });
 
@@ -167,15 +171,12 @@ function render(data) {
         elSynonymDiv[k].style.display = "flex";
         elSynonym[k].textContent = "synonyms";
         elSynonymValue[k].innerHTML = meaning["synonyms"];
-        console.log(meaning["synonyms"]);
       }
-
       //render antonyms
       if (meaning["antonyms"].length > 0) {
         elAntonymsDiv[k].style.display = "flex";
         elAntonym[k].textContent = "Antonyms";
         elAntonymValue[k].innerHTML = meaning["antonyms"];
-        console.log(meaning["antonyms"]);
       }
     });
   });
@@ -195,16 +196,13 @@ function findAudioValidSrc(data) {
   }
 }
 
-//onload
-// window.onload(render(JSON.parse(localStorage.getItem("myData"))));
-
+//Reload page function to prevent clearing page
 window.addEventListener("load", (evt) => {
   evt.preventDefault();
   const dataAPi = JSON.parse(localStorage.getItem("myData"));
   render(dataAPi);
 
   const Mode = localStorage.getItem("mode");
-  console.log(Mode);
 
   if (Mode === "light") {
     elOnOffImage.src = "./images/off.svg";
@@ -217,7 +215,6 @@ window.addEventListener("load", (evt) => {
   }
 
   const fontttFamily = localStorage.getItem("fontfamily");
-
   if (fontttFamily === "'Inter', sans-serif") {
     document.body.style.fontFamily = "'Inter', sans-serif";
   } else if (fontttFamily === "'Lora', serif") {
@@ -226,3 +223,10 @@ window.addEventListener("load", (evt) => {
     document.body.style.fontFamily = "'Inconsolata', monospace";
   }
 });
+
+//query save
+function querySave(word) {
+  const urlParams = new URLSearchParams(window.location.search);
+  urlParams.set("search", word);
+  window.location.href = `${window.location.origin}${window.location.pathname}?${urlParams}`;
+}
