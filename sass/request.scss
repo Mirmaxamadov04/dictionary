@@ -17,7 +17,7 @@
   right: 25px;
 }
 
-.form__input:active {
+.form__input:focus {
   border: 1px solid #a445ed;
 }
 
@@ -61,3 +61,7 @@
 // .on::placeholder {
 //   color: #ffffff;
 // }
+
+.border {
+  border: 1px solid #921e4e;
+}

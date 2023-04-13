@@ -44,7 +44,6 @@ elForm.addEventListener("submit", (evt) => {
     elInput.classList.add("border");
     elLoader.style.display = "none";
     elContent.style.display = "block";
-    querySave(word);
     return false;
   }
 
@@ -105,14 +104,17 @@ const fontSelector = document.getElementsByClassName("nav__select")[0];
 fontSelector.addEventListener("change", (event) => {
   event.preventDefault();
   if (event.target.value === "Sans Serif") {
+    localStorage.setItem("selectedFont", "Sans Serif");
     document.body.style.fontFamily = "'Inter', sans-serif";
     localStorage.setItem("fontfamily", "'Inter', sans-serif");
   } else if (event.target.value === "Serif") {
     document.body.style.fontFamily = "'Lora', serif";
     localStorage.setItem("fontfamily", "'Lora', serif");
+    localStorage.setItem("selectedFont", "Serif");
   } else {
     document.body.style.fontFamily = "'Inconsolata', monospace";
     localStorage.setItem("fontfamily", "'Inconsolata', monospace");
+    localStorage.setItem("selectedFont", "Mono");
   }
 });
 
@@ -133,6 +135,7 @@ function switchMood() {
 
 //render searched word to the page
 function render(data) {
+  fontSelector.value = localStorage.getItem("selectedFont");
   if (data["title"] == "No Definitions Found") {
     elErrorDiv.style.display = "block";
     elErrorParagraph.textContent = data["title"];
